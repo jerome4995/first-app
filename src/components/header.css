@@ -1,0 +1,15 @@
+#navlink {
+  color: white;
+}
+
+#navlink:focus {
+  color: rgb(51, 182, 175);
+}
+
+#navlink:hover {
+  color: rgb(51, 182, 175);
+}
+
+#logout:hover {
+  color: rgb(51, 182, 175);
+}
