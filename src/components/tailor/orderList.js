@@ -20,8 +20,11 @@ import OrderTable from "./orderTable";
 //firebase
 import { orderRef } from "../../firebase/Firebase";
 import { firebaseLooper } from "../../firebase/FirebaseLooper";
+import firebase from "firebase";
 
 const OrderList = () => {
+  const [store, setStore] = useState([]);
+  const [reload, setReload] = useState(false);
   const [orderDetails, setOrderDetails] = useState([]);
   const [term, setTerm] = useState("");
 
@@ -46,6 +49,69 @@ const OrderList = () => {
       );
     });
   }
+  const fetchData = async () => {
+    await firebase
+      .firestore()
+      .collection("order")
+      .get()
+      .then((res) => {
+        const detail = firebaseLooper(res);
+        setStore(detail);
+        // console.log(detail,'detail')
+      });
+  };
+  const handleFilterPending = (value) => {
+    if (value == undefined) {
+      fetchData();
+    } else {
+      firebase
+        .firestore()
+        .collection("order")
+        .where("oStatus", "==", value)
+        .get()
+        .then((res) => {
+          const forms = firebaseLooper(res);
+          setStore(forms);
+          console.log(forms, "Pending");
+        });
+    }
+  };
+
+  const handleFilterCompleted = (value) => {
+    if (value == undefined) {
+      fetchData();
+    } else {
+      firebase
+        .firestore()
+        .collection("order")
+        .where("oStatus", "==", value)
+        .get()
+        .then((res) => {
+          const forms = firebaseLooper(res);
+          setStore(forms);
+          console.log(forms, "Completed");
+        });
+    }
+  };
+  const handleFilterDelivered = (value) => {
+    if (value == undefined) {
+      fetchData();
+    } else {
+      firebase
+        .firestore()
+        .collection("order")
+        .where("oStatus", "==", value)
+        .get()
+        .then((res) => {
+          const forms = firebaseLooper(res);
+          setStore(forms);
+          console.log(forms, "Delivered");
+        });
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [reload]);
 
   return (
     <div className="container" style={{ marginTop: "12px" }}>
@@ -96,9 +162,24 @@ const OrderList = () => {
             <hr />
             <Row>
               <Col md="12" className="d-none d-md-block">
-                <button class="right floated ui grey button">Delivered</button>
-                <button class="right floated ui grey button">Completed</button>
-                <button class="right floated ui grey button">Pending</button>
+                <button
+                  class="right floated ui grey button"
+                  onClick={() => handleFilterDelivered("Delivered")}
+                >
+                  Delivered
+                </button>
+                <button
+                  class="right floated ui grey button"
+                  onClick={() => handleFilterCompleted("Completed")}
+                >
+                  Completed
+                </button>
+                <button
+                  class="right floated ui grey button"
+                  onClick={() => handleFilterPending("Pending")}
+                >
+                  Pending
+                </button>
                 <button class="right floated ui grey button">All</button>
               </Col>
             </Row>

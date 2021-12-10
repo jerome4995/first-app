@@ -12,10 +12,13 @@ import {
   Button,
   Input,
   Form,
+  FormGroup,
+  FormFeedback,
+  FormText,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, StatisticValue } from "semantic-ui-react";
 import "./table.css";
 import Swal from "sweetalert2";
 import { orderRef } from "../../firebase/Firebase";
@@ -25,8 +28,6 @@ const options = [
   { key: "css", text: "Completed", value: "css" },
   { key: "design", text: "Delivered", value: "design" },
 ];
-
-const optionsGt = options.map(({ text }) => ({ text: text }));
 
 const AddOrder = () => {
   const values = {
@@ -146,10 +147,11 @@ const AddOrder = () => {
                         defaultValue="Phone Number"
                         type="number"
                         value={phoneNumber}
-                        onChange={handleInputChange}
                         name="phoneNumber"
+                        onChange={handleInputChange}
                       />
                     </Col>
+
                     <Col md="4">
                       <label>Name</label>
                       <Input
@@ -456,6 +458,7 @@ const AddOrder = () => {
                         fluid
                         selection
                         options={options}
+                        name="result"
                       />
                     </Col>
                   </Row>
