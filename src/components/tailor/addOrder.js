@@ -24,9 +24,9 @@ import Swal from "sweetalert2";
 import { orderRef } from "../../firebase/Firebase";
 
 const options = [
-  { key: "angular", text: "Pending", value: "angular" },
-  { key: "css", text: "Completed", value: "css" },
-  { key: "design", text: "Delivered", value: "design" },
+  { key: "angular", text: "Pending", value: "Pending" },
+  { key: "css", text: "Completed", value: "Completed" },
+  { key: "design", text: "Delivered", value: "Delivered" },
 ];
 
 const AddOrder = () => {
@@ -62,6 +62,7 @@ const AddOrder = () => {
   };
 
   const [initialState, setInitialState] = useState(values);
+  console.log(initialState);
   const {
     phoneNumber,
     name,
@@ -99,6 +100,12 @@ const AddOrder = () => {
       ...initialState,
       [name]: value,
     });
+  };
+
+  const handleDropDown = (event, result) => {
+    const { name, value } = result || event.target;
+    // console.log(name, value);
+    setInitialState({ ...initialState, [name]: value });
   };
 
   const handleSubmit = (e) => {
@@ -458,7 +465,9 @@ const AddOrder = () => {
                         fluid
                         selection
                         options={options}
-                        name="result"
+                        name="oStatus"
+                        onChange={handleDropDown}
+                        value={oStatus.oStatus}
                       />
                     </Col>
                   </Row>
