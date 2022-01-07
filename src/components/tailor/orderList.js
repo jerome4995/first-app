@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 import "./table.css";
 import OrderTable from "./orderTable";
+import db from "firebase";
 
 //firebase
 import { orderRef } from "../../firebase/Firebase";
@@ -23,9 +24,17 @@ import { firebaseLooper } from "../../firebase/FirebaseLooper";
 import firebase from "firebase";
 
 const OrderList = () => {
+  // const [pending, setPending] = useState([]);
+  // console.log(pending, "pending Test");
+  // const [completed, setCompleted] = useState();
+  // console.log(completed, "Completed Test");
+  // const [delivered, setDelivered] = useState();
+  // console.log(delivered, "Delivered Test");
+
   const [store, setStore] = useState([]);
   const [reload, setReload] = useState(false);
   const [orderDetails, setOrderDetails] = useState([]);
+
   const [term, setTerm] = useState("");
 
   const fetchBlogs = async () => {
@@ -43,6 +52,7 @@ const OrderList = () => {
       console.log(row, "test");
       console.log(row.phoneNumber, "test 1");
       console.log(row.name, "test 2");
+      console.log(orderDetails, "rest");
       return (
         row.phoneNumber.toString().toLowerCase().indexOf(term) > -1 ||
         row.name.toLowerCase().indexOf(term) > -1
@@ -60,6 +70,19 @@ const OrderList = () => {
         // console.log(detail,'detail')
       });
   };
+
+  const handleAll = async () => {
+    await firebase
+      .firestore()
+      .collection("order")
+      .get()
+      .then((res) => {
+        const All = firebaseLooper(res);
+        setOrderDetails(All);
+        // console.log(All, "All");
+      });
+  };
+
   const handleFilterPending = (value) => {
     if (value == undefined) {
       fetchData();
@@ -70,9 +93,10 @@ const OrderList = () => {
         .where("oStatus", "==", value)
         .get()
         .then((res) => {
-          const forms = firebaseLooper(res);
-          setStore(forms);
-          console.log(forms, "Pending");
+          const pending = firebaseLooper(res);
+          setStore(pending);
+          console.log(pending, "pending");
+          setOrderDetails(pending);
         });
     }
   };
@@ -87,12 +111,14 @@ const OrderList = () => {
         .where("oStatus", "==", value)
         .get()
         .then((res) => {
-          const forms = firebaseLooper(res);
-          setStore(forms);
-          console.log(forms, "Completed");
+          const completed = firebaseLooper(res);
+          setStore(completed);
+          console.log(completed, "Completed");
+          setOrderDetails(completed);
         });
     }
   };
+
   const handleFilterDelivered = (value) => {
     if (value == undefined) {
       fetchData();
@@ -103,9 +129,10 @@ const OrderList = () => {
         .where("oStatus", "==", value)
         .get()
         .then((res) => {
-          const forms = firebaseLooper(res);
-          setStore(forms);
-          console.log(forms, "Delivered");
+          const delivered = firebaseLooper(res);
+          setStore(delivered);
+          console.log(delivered, "Delivered");
+          setOrderDetails(delivered);
         });
     }
   };
@@ -180,7 +207,12 @@ const OrderList = () => {
                 >
                   Pending
                 </button>
-                <button class="right floated ui grey button">All</button>
+                <button
+                  class="right floated ui grey button"
+                  onClick={() => handleAll()}
+                >
+                  All
+                </button>
               </Col>
             </Row>
             <Row>
