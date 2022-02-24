@@ -12,6 +12,7 @@ import CustomerList from "../tailor/customerList";
 import AddCustomer from "../tailor/addCustomer";
 import OrderListTest from "../tailor/OrderListTest";
 import FormTest from "../tailor/FormTest";
+import MapTest from "../tailor/mapTest";
 
 // tailor order
 import ViewOrder from "../tailor/viewOrder";
@@ -69,6 +70,11 @@ const BaseRouter = () => {
             <Header />
             <EditCustomer />
           </Route>
+          <Route path="/maptest">
+            <Header />
+            <MapTest />
+          </Route>
+
           {
             /* <Route path="/orderlisttest">
             <Header />

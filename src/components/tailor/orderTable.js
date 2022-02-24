@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./table.css";
-import { Icon } from "semantic-ui-react";
+import { Icon, ItemContent } from "semantic-ui-react";
 import Swal from "sweetalert2";
 //firebase
-import { orderRef } from "../../firebase/Firebase";
+import { orderRef, db } from "../../firebase/Firebase";
+import firebase from "firebase";
+import OrderList from "./orderList";
 
 const OrderTable = ({ orderDetails }) => {
   const onDelete = (id) => {
@@ -32,7 +34,7 @@ const OrderTable = ({ orderDetails }) => {
       }
     });
   };
-
+  let i = 1;
   return (
     <div className="tableContainer">
       <table className="table">
@@ -49,9 +51,9 @@ const OrderTable = ({ orderDetails }) => {
           </tr>
         </thead>
         <tbody>
-          {orderDetails.map((item, id) => (
-            <tr keys={item.id}>
-              <td data-label="Order No">{item.id}</td>
+          {orderDetails.map((item, id, index) => (
+            <tr keys={id}>
+              <td data-label="Order No">{id + 1}</td>
               <td data-label="Phone">{item.phoneNumber}</td>
               <td data-label="No. of Pant">{item.nPant}</td>
               <td data-label="No. of Shirt">{item.nShirt}</td>
@@ -81,6 +83,7 @@ const OrderTable = ({ orderDetails }) => {
                 ></i>
               </td>
             </tr>
+            //let i= i + 1;
           ))}
         </tbody>
       </table>
