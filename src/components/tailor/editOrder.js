@@ -21,9 +21,9 @@ import Swal from "sweetalert2";
 import { orderRef } from "../../firebase/Firebase";
 
 const options = [
-  { key: "angular", text: "Pending", value: "angular" },
-  { key: "css", text: "Completed", value: "css" },
-  { key: "design", text: "Delivered", value: "design" },
+  { key: "angular", text: "Pending", value: "Pending" },
+  { key: "css", text: "Completed", value: "Completed" },
+  { key: "design", text: "Delivered", value: "Delivered" },
 ];
 
 const EditOrder = () => {
@@ -36,7 +36,7 @@ const EditOrder = () => {
     nPant,
     nShirt,
     age,
-    emailId,
+    oEmail,
     address,
     pHeight,
     pHip,
@@ -44,12 +44,12 @@ const EditOrder = () => {
     pThighTight,
     pThighLoose,
     pKneeHeight,
-    pKneeLoose,
+    pKneeLose,
     pBottom,
     pPlay,
     sHeight,
     sBodySqu,
-    sStomachSqu,
+    sStoamchSqu,
     sSeat,
     sShoulder,
     sHandLength,
@@ -80,6 +80,11 @@ const EditOrder = () => {
     const { name, value } = e.target;
     setOrderDetails({ ...orderDetails, [name]: value });
   };
+  const handleDropDown = (event, result) => {
+    const { name, value } = result || event.target;
+    // console.log(name, value);
+    setOrderDetails({ ...orderDetails, [name]: value });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -92,7 +97,7 @@ const EditOrder = () => {
       nPant,
       nShirt,
       age,
-      emailId,
+      oEmail,
       address,
       pHeight,
       pHip,
@@ -100,12 +105,12 @@ const EditOrder = () => {
       pThighTight,
       pThighLoose,
       pKneeHeight,
-      pKneeLoose,
+      pKneeLose,
       pBottom,
       pPlay,
       sHeight,
       sBodySqu,
-      sStomachSqu,
+      sStoamchSqu,
       sSeat,
       sShoulder,
       sHandLength,
@@ -125,7 +130,7 @@ const EditOrder = () => {
         nPant,
         nShirt,
         age,
-        emailId,
+        oEmail,
         address,
         pHeight,
         pHip,
@@ -133,12 +138,12 @@ const EditOrder = () => {
         pThighTight,
         pThighLoose,
         pKneeHeight,
-        pKneeLoose,
+        pKneeLose,
         pBottom,
         pPlay,
         sHeight,
         sBodySqu,
-        sStomachSqu,
+        sStoamchSqu,
         sSeat,
         sShoulder,
         sHandLength,
@@ -228,8 +233,8 @@ const EditOrder = () => {
                       <label>Email</label>
                       <Input
                         type="email"
-                        value={emailId}
-                        name="emailId"
+                        value={oEmail}
+                        name="oEmail"
                         onChange={onChangeHandler}
                       />
                     </Col>
@@ -319,8 +324,8 @@ const EditOrder = () => {
                       <label>Knee Loose</label>
                       <Input
                         type="number"
-                        value={pKneeLoose}
-                        name="pKneeLoose"
+                        value={pKneeLose}
+                        name="pKneeLose"
                         onChange={onChangeHandler}
                       />
                     </Col>
@@ -397,8 +402,8 @@ const EditOrder = () => {
                       <label>Stomach Squre</label>
                       <Input
                         type="number"
-                        value={sStomachSqu}
-                        name="sStomachSqu"
+                        value={sStoamchSqu}
+                        name="sStoamchSqu"
                         onChange={onChangeHandler}
                       />
                     </Col>
@@ -510,6 +515,9 @@ const EditOrder = () => {
                         fluid
                         selection
                         options={options}
+                        name="oStatus"
+                        onChange={handleDropDown}
+                        value={oStatus}
                       />
                     </Col>
                   </Row>

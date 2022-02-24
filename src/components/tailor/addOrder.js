@@ -21,7 +21,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Dropdown, StatisticValue } from "semantic-ui-react";
 import "./table.css";
 import Swal from "sweetalert2";
-import { orderRef } from "../../firebase/Firebase";
+import { orderRef, db } from "../../firebase/Firebase";
 
 const options = [
   { key: "angular", text: "Pending", value: "Pending" },
